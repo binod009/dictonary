@@ -7,19 +7,18 @@ import axios from "axios";
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [resdata, setResData] = useState([]);
-
-  const handleSearch = (e) => {
+  const baseURL = "https://api.dictionaryapi.dev/api/v2/entries/en/";
+  function handleSearch(e) {
     e.preventDefault();
     setSearchQuery(e.target.value);
-  };
-  let FetchApi = async (e) => {
+  }
+
+  const FetchApi = async (e) => {
     e.preventDefault();
+    console.log("<===>", searchQuery);
     try {
-      const response = await axios.get(
-        "https://api.dictionaryapi.dev/api/v2/entries/en/" + searchQuery
-      );
-      setResData(response.data);
-      console.log("========>result", resdata);
+      let response = await axios.get(baseURL + searchQuery);
+      setResData(response.data[0]);
     } catch (excp) {
       console.log("thisis excp", excp);
     }
@@ -33,7 +32,7 @@ function App() {
         onSubmit={FetchApi}
         setSearchQuery={setSearchQuery}
       />
-      <Card />
+      <Card data={resdata} />
       <button className="bg-red-500 px-5 py-2 rounded-md" onClick={FetchApi}>
         search
       </button>

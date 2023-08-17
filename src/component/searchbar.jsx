@@ -12,7 +12,7 @@ const SearchBar = ({ searchQuery, onSearch, onSubmit }) => {
                 value={searchQuery}
                 className="relative w-[65%] mx-auto py-3 rounded-xl bg-gray-200 border-none outline-none text-center"
                 placeholder="keyword"
-                onChange={onSearch}
+                onChange={(e) => onSearch(e)}
               />
               <img
                 className="absolute left-[18rem]"

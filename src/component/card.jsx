@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const Card = ({ data }) => {
-  console.log("this is from card data", data);
+  const [active, setActive] = useState("noun");
+
   return (
     <>
       <div className="w-full mx-auto">
         <div className="bg-red-500 flex items-center justify-center p-5">
-          <div className="bg-gray-600 rounded-3xl w-[880px] h-[650px] ">
+          <div className="bg-gray-300 rounded-3xl w-[980px] h-[650px] ">
             <div className="m-6 w-32 flex justify-around items-center bg-orange-200">
               <img
                 className="h-[50px] w-[50px]"
@@ -25,12 +26,28 @@ const Card = ({ data }) => {
                 </button>
               </div>
             </div>
-            {/* {data &&
-              data.meanings[0].definations.map((item, ind) => (
-                <li>
-                  {ind} {item.definition}
-                </li>
-              ))} */}
+            {data && data.meanings ? (
+              active === "noun" ? (
+                data.meanings[0].definitions.map((item, ind) => (
+                  <div className="ml-5 text-sm">
+                    <li key={ind}>
+                      {ind + 1} {item.definition}
+                    </li>
+                  </div>
+                ))
+              ) : (
+                data.meanings[1].definitions.map((item, ind) => (
+                  <div className="ml-5 text-sm">
+                    <li key={ind}>
+                      {ind + 1}
+                      {item.definition}
+                    </li>
+                  </div>
+                ))
+              )
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>
