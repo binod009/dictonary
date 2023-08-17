@@ -33,9 +33,6 @@ function App() {
         setSearchQuery={setSearchQuery}
       />
       <Card data={resdata} />
-      <button className="bg-red-500 px-5 py-2 rounded-md" onClick={FetchApi}>
-        search
-      </button>
     </>
   );
 }

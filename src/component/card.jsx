@@ -14,14 +14,20 @@ const Card = ({ data }) => {
                 src="./images/play.png"
                 alt="play black button"
               />
-              <span>/ˈæp.əl/</span>
+              <span>{data && data.phonetic ? data.phonetic : "/../"}</span>
             </div>
             <div className="w-full flex items-center m-8">
               <div className="flex justify-around gap-5">
-                <button className="lg:text-md bg-black px-3  text-white border-none outline-none rounded-sm hover:bg-gray-800 transition-all duration-200">
+                <button
+                  onClick={() => setActive("noun")}
+                  className="lg:text-md bg-black px-3  text-white border-none outline-none rounded-sm hover:bg-gray-800 transition-all duration-200"
+                >
                   noun
                 </button>
-                <button className="lg:text-md bg-[#DEDEDE] px-3 border-none outline-none rounded-sm hover:bg-gray-800 hover:text-white transition-all duration-200">
+                <button
+                  onClick={() => setActive("verb")}
+                  className="lg:text-md bg-[#DEDEDE] px-3 border-none outline-none rounded-sm hover:bg-gray-800 hover:text-white transition-all duration-200"
+                >
                   verb
                 </button>
               </div>
@@ -40,6 +46,7 @@ const Card = ({ data }) => {
                   <div className="ml-5 text-sm">
                     <li key={ind}>
                       {ind + 1}
+
                       {item.definition}
                     </li>
                   </div>
