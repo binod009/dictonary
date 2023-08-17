@@ -1,24 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import Nav from "./component/Nav";
+import { useState } from "react";
+import SearchBar from "./component/searchbar";
+import Card from "./component/card";
+import axios from "axios";
 function App() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [resdata, setResData] = useState([]);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setSearchQuery(e.target.value);
+  };
+  let FetchApi = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.get(
+        "https://api.dictionaryapi.dev/api/v2/entries/en/" + searchQuery
+      );
+      setResData(response.data);
+      console.log("========>result", resdata);
+    } catch (excp) {
+      console.log("thisis excp", excp);
+    }
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Nav />
+      <SearchBar
+        searchQuery={searchQuery}
+        onSearch={handleSearch}
+        onSubmit={FetchApi}
+        setSearchQuery={setSearchQuery}
+      />
+      <Card />
+      <button className="bg-red-500 px-5 py-2 rounded-md" onClick={FetchApi}>
+        search
+      </button>
+    </>
   );
 }
 
