@@ -6,6 +6,8 @@ import Card from "./component/card";
 import axios from "axios";
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [showSkeleton, setShowSkeleton] = useState(true);
+  const [activeSkeleton, setActiveSkeleton] = useState(false);
   const [resdata, setResData] = useState([]);
   const baseURL = "https://api.dictionaryapi.dev/api/v2/entries/en/";
   function handleSearch(e) {
@@ -13,14 +15,19 @@ function App() {
     setSearchQuery(e.target.value);
   }
 
-  const FetchApi = async (e) => {
+  const FetchApi = (e) => {
     e.preventDefault();
-    console.log("<===>", searchQuery);
+    setActiveSkeleton(true);
+    setShowSkeleton(true);
     try {
-      let response = await axios.get(baseURL + searchQuery);
-      setResData(response.data[0]);
+      setTimeout(async () => {
+        const response = await axios.get(baseURL + searchQuery);
+        setResData(response.data[0]);
+        setActiveSkeleton(false);
+        setShowSkeleton(false);
+      }, 2000);
     } catch (excp) {
-      console.log("thisis excp", excp);
+      console.log("Error", excp);
     }
   };
   return (
@@ -32,7 +39,11 @@ function App() {
         onSubmit={FetchApi}
         setSearchQuery={setSearchQuery}
       />
-      <Card data={resdata} />
+      <Card
+        data={resdata}
+        skeleton={showSkeleton}
+        loadingstate={activeSkeleton}
+      />
     </>
   );
 }
