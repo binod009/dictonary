@@ -1,20 +1,24 @@
 import "./App.css";
-import Nav from "./component/Nav";
+
 import { useState } from "react";
-import SearchBar from "./component/searchbar";
+
 import Card from "./component/card";
 import axios from "axios";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Maincontext } from "./Context/useContext";
+import Home from "./component/Home";
+
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [showSkeleton, setShowSkeleton] = useState(true);
   const [activeSkeleton, setActiveSkeleton] = useState(false);
   const [resdata, setResData] = useState([]);
+
   const baseURL = "https://api.dictionaryapi.dev/api/v2/entries/en/";
   function handleSearch(e) {
     e.preventDefault();
     setSearchQuery(e.target.value);
   }
-
   const FetchApi = (e) => {
     e.preventDefault();
     setActiveSkeleton(true);
@@ -32,18 +36,23 @@ function App() {
   };
   return (
     <>
-      <Nav />
-      <SearchBar
-        searchQuery={searchQuery}
-        onSearch={handleSearch}
-        onSubmit={FetchApi}
-        setSearchQuery={setSearchQuery}
-      />
-      <Card
-        data={resdata}
-        skeleton={showSkeleton}
-        loadingstate={activeSkeleton}
-      />
+      <Maincontext.Provider value={{ showSkeleton, activeSkeleton, resdata }}>
+        <Router>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Home
+                  searchQuery={searchQuery}
+                  onSearch={handleSearch}
+                  onSubmit={FetchApi}
+                />
+              }
+            />
+            <Route path="details" element={<Card />} />
+          </Routes>
+        </Router>
+      </Maincontext.Provider>
     </>
   );
 }

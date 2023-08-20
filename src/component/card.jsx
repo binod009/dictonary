@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { useContext } from "react";
+import { useState } from "react";
 import { Skeleton } from "antd";
-const Card = ({ data, skeleton, loadingstate }) => {
+import { Maincontext } from "../Context/useContext";
+const Card = () => {
   const [active, setActive] = useState("noun");
   const [playicon, setplayicon] = useState(true);
-  function playaudio(data) {
+  const { showSkeleton, activeSkeleton, resdata } = useContext(Maincontext);
+  function playaudio(resdata) {
     setplayicon(false);
-    let url = data.phonetics[0].audio;
+    let url = resdata.phonetics[0].audio;
     let audio = new Audio(url);
     audio.play();
     setTimeout(() => {
@@ -20,7 +23,7 @@ const Card = ({ data, skeleton, loadingstate }) => {
             <div className="m-6 w-40 flex justify-around items-center">
               <button
                 className="h-[50px] w-[50px] border-none outline-none"
-                onClick={() => playaudio(data)}
+                onClick={() => playaudio(resdata)}
               >
                 <img
                   src={`${
@@ -30,7 +33,9 @@ const Card = ({ data, skeleton, loadingstate }) => {
                 />
               </button>
 
-              <span>{data && data.phonetic ? data.phonetic : "/../"}</span>
+              <span>
+                {resdata && resdata.phonetic ? resdata.phonetic : "/../"}
+              </span>
             </div>
             <div className="w-full flex items-center m-8">
               <div className="flex justify-around gap-5">
@@ -58,19 +63,19 @@ const Card = ({ data, skeleton, loadingstate }) => {
             </div>
             <Skeleton
               paragraph={{ rows: 8 }}
-              active={loadingstate}
-              loading={skeleton}
+              active={activeSkeleton}
+              loading={showSkeleton}
             >
               <ol className="text-sm list-decimal ml-7">
-                {data && data.meanings ? (
+                {resdata && resdata.meanings ? (
                   active === "noun" ? (
-                    data.meanings[0].definitions.map((item, ind) => (
+                    resdata.meanings[0].definitions.map((item, ind) => (
                       <li key={ind} className="p-2">
                         {item.definition}
                       </li>
                     ))
                   ) : (
-                    data.meanings[1].definitions.map((item, ind) => (
+                    resdata.meanings[1].definitions.map((item, ind) => (
                       <li key={ind} className="p-2">
                         {item.definition}
                       </li>
