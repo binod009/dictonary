@@ -49,7 +49,7 @@ function App() {
                 />
               }
             />
-            <Route path="details" element={<Card />} />
+            <Route path="details" element={<Card secondPage={true} />} />
           </Routes>
         </Router>
       </Maincontext.Provider>

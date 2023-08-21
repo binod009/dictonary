@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { useState } from "react";
 import { Skeleton } from "antd";
 import { Maincontext } from "../Context/useContext";
-const Card = () => {
+const Card = ({ secondPage }) => {
   const [active, setActive] = useState("noun");
   const [playicon, setplayicon] = useState(true);
   const { showSkeleton, activeSkeleton, resdata, searchQuery } =
@@ -18,12 +18,18 @@ const Card = () => {
   }
   return (
     <>
-      <div className="w-full">
+      <div className="w-full bg-white">
+        {secondPage ? (
+          <div className="w-[62%] mx-auto mt-10">
+            <span className="text-3xl text-black font-bold">
+              Word: {resdata.word}
+            </span>
+          </div>
+        ) : (
+          ""
+        )}
         <div className="mx-auto flex items-center justify-center p-5">
-          {searchQuery ?? (
-            <div className="text-2xl text-black">Word: {searchQuery}</div>
-          )}
-          <div className="bg-gray-300 rounded-3xl w-[980px] h-[650px] text-left ">
+          <div className="bg-gray-300 rounded-2xl w-[980px] sm:h-auto md:h-[660px] lg:h-[650px] xl:h-[650px] text-left ">
             <div className="m-6 w-40 flex justify-around items-center">
               <button
                 className="h-[50px] w-[50px] border-none outline-none"
@@ -70,7 +76,7 @@ const Card = () => {
               active={activeSkeleton}
               loading={showSkeleton}
             >
-              <ol className="text-sm list-decimal ml-7">
+              <ol className="text-sm list-decimal ml-7 sm:pl-2 sm:pr-2 text-justify">
                 {resdata && resdata.meanings ? (
                   active === "noun" ? (
                     resdata.meanings[0].definitions.map((item, ind) => (

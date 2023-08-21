@@ -13,7 +13,7 @@ const Home = ({ searchQuery, onSearch, onSubmit }) => {
         onSearch={onSearch}
         onSubmit={onSubmit}
       />
-      <Card />
+      <Card secondPage={false} />
       <Footer />
     </>
   );
