@@ -5,8 +5,7 @@ import { Maincontext } from "../Context/useContext";
 const Card = ({ secondPage }) => {
   const [active, setActive] = useState("noun");
   const [playicon, setplayicon] = useState(true);
-  const { showSkeleton, activeSkeleton, resdata, searchQuery } =
-    useContext(Maincontext);
+  const { showSkeleton, activeSkeleton, resdata } = useContext(Maincontext);
   function playaudio(resdata) {
     setplayicon(false);
     let url = resdata.phonetics[0].audio;

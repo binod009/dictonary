@@ -1,7 +1,5 @@
 import "./App.css";
-
 import { useState } from "react";
-
 import Card from "./component/card";
 import axios from "axios";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
