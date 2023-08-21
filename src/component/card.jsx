@@ -5,7 +5,8 @@ import { Maincontext } from "../Context/useContext";
 const Card = () => {
   const [active, setActive] = useState("noun");
   const [playicon, setplayicon] = useState(true);
-  const { showSkeleton, activeSkeleton, resdata } = useContext(Maincontext);
+  const { showSkeleton, activeSkeleton, resdata, searchQuery } =
+    useContext(Maincontext);
   function playaudio(resdata) {
     setplayicon(false);
     let url = resdata.phonetics[0].audio;
@@ -19,6 +20,9 @@ const Card = () => {
     <>
       <div className="w-full">
         <div className="mx-auto flex items-center justify-center p-5">
+          {searchQuery ?? (
+            <div className="text-2xl text-black">Word: {searchQuery}</div>
+          )}
           <div className="bg-gray-300 rounded-3xl w-[980px] h-[650px] text-left ">
             <div className="m-6 w-40 flex justify-around items-center">
               <button
